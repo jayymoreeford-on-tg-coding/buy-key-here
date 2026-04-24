@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORDTRIX PRICE</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #0f0f2b, #000);
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+/* PARTICLE BACKGROUND */
+#bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-2;
+}
+
+/* HEADER */
+.header{
+  margin-top:40px;
+  font-size:40px;
+  font-weight:900;
+  letter-spacing:3px;
+  background:linear-gradient(90deg,gold,orange,white);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 25px gold;
+}
+
+.sub{
+  color:cyan;
+  margin-bottom:30px;
+  text-shadow:0 0 10px cyan;
+}
+
+/* CARD CONTAINER */
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:25px;
+  padding:20px;
+}
+
+/* CARD */
+.card{
+  position:relative;
+  width:280px;
+  padding:25px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  box-shadow:0 0 30px rgba(255,215,0,0.5);
+  transition:0.4s;
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:20px;
+  padding:2px;
+  background:linear-gradient(45deg,gold,magenta,cyan,gold);
+  background-size:300%;
+  animation:borderMove 6s linear infinite;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+}
+
+@keyframes borderMove{
+  0%{background-position:0%}
+  100%{background-position:300%}
+}
+
+.card:hover{
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 0 50px gold;
+}
+
+.price{
+  font-size:26px;
+  font-weight:bold;
+  color:gold;
+  text-shadow:0 0 15px gold;
+  margin:10px 0;
+}
+
+button{
+  padding:10px 18px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(45deg,gold,orange);
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px gold;
+}
+
+/* TELEGRAM BUTTON */
+.telegram-float{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:60px;
+  height:60px;
+  background:#0088cc;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 0 20px rgba(0,136,204,0.7);
+}
+
+.telegram-float img{
+  width:30px;
+}
+
+.footer{
+  margin:40px 0;
+  color:gray;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="header">👑 FORDTRIX PRICE 👑</div>
+<div class="sub">Premium Digital Showcase</div>
+<div class="sub">🄼🄾🄳&🄸🄽🄹🄴🄲🅃🄾🅁</div>
+
+<div class="container">
+
+<div class="card">
+  <h3>3 Days</h3>
+  <div class="price">₱130</div>
+  <button onclick="buyNow('3 Days - ₱130')">Buy</button>
+</div>
+
+<div class="card">
+  <h3>15 Days</h3>
+  <div class="price">₱230</div>
+  <button onclick="buyNow('15 Days - ₱230')">Buy</button>
+</div>
+
+<div class="card">
+  <h3>30 Days</h3>
+  <div class="price">₱500</div>
+  <button onclick="buyNow('30 Days - ₱500')">Buy</button>
+</div>
+
+<div class="card">
+  <h3>Lifetime Access</h3>
+  <div class="price">₱800</div>
+  <button onclick="buyNow('Lifetime - ₱800')">Buy</button>
+</div>
+
+<div class="card">
+  <h3>Lifetime Promo</h3>
+  <div>3slot only (1/3)</div>
+  <div class="price">₱550</div>
+  <button onclick="buyNow('Promo - ₱550')">Buy</button>
+</div>
+
+</div>
+
+<!-- TELEGRAM FLOAT -->
+<a href="https://t.me/fordCN" target="_blank" class="telegram-float">
+  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+</a>
+
+<div class="footer">© 2026 Legendary UI Design By: ford</div>
+
+<!-- PARTICLE SCRIPT -->
+<script>
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener("resize",resize);
+
+let particles=[];
+for(let i=0;i<120;i++){
+  particles.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*2,
+    speed:Math.random()*0.5+0.2
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="rgba(255,215,0,0.8)";
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fill();
+    p.y+=p.speed;
+    if(p.y>canvas.height) p.y=0;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+
+<!-- TELEGRAM BUY SCRIPT -->
+<script>
+function buyNow(item){
+  let username = "fordCN";
+  let message = `Hello boss, mag aavail ako ng ${item}`;
+  let url = `https://t.me/${username}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
